@@ -1,22 +1,40 @@
 import React, {useState} from 'react'
 import HeadBar from '../components/HeadBar'
 import Footer from '../components/Footer'
-
+import axios from 'axios';
 const Home = () => {
     const [input, setInput] = useState('');
+    const [output, setOutput] = useState('');
 
     const [inLanguage, setInLanguage] = useState('en')
     const [outLanguage, setOutLanguage] = useState('en')
 
     const [pdf, setPdf] = useState('');
     
+
     const changeHandler = ((event)=>{
         setInput(event.target.value);
     })
   
-    const submitHandler = (()=>{
+    const submitHandler = (async()=>{
         // api call
-
+        
+        const axiosInstance = axios.create({});
+        const response = await axiosInstance({
+            method:  'POST',
+            url: 'http://localhost:8080/translate',
+            data: {
+                languageFrom: inLanguage,
+                languageTo : outLanguage,
+                text: [{
+                    source: input
+                }]
+            },
+            headers: null,
+            params: null
+        })
+        
+        setOutput(response?.data?.message)
     })
     return (
         <div className='w-screen h-screen overflow-hidden border-box m-0'>
@@ -79,7 +97,7 @@ const Home = () => {
                     <textarea className='w-[40%] bg-sky-300/70 h-[200px] border-2 p-2 rounded-md border-sky-500 outline-none' onChange={changeHandler}>
 
                     </textarea>
-                    <textarea className='w-[40%] bg-sky-300/70 h-[200px] border-2 p-2 rounded-md border-sky-500 outline-none' readOnly>
+                    <textarea value={output} className='w-[40%] bg-sky-300/70 h-[200px] border-2 p-2 rounded-md border-sky-500 outline-none' readOnly>
 
                     </textarea>
                 </div>
@@ -88,7 +106,7 @@ const Home = () => {
                         <label htmlFor='pdfDocument'>Upload a File</label>
                         <input type='file' id='pdfDocument' className='hidden' />
                     </div>
-                    <button className='w-[41%] bg-sky-300 rounded-md border-sky-500 border-2 px-10 py-2 duration-200 hover:scale-95'>Translate</button>
+                    <button className='w-[41%] bg-sky-300 rounded-md border-sky-500 border-2 px-10 py-2 duration-200 hover:scale-95' onClick={submitHandler}>Translate</button>
                 </div>
             </main>
             <Footer/>
