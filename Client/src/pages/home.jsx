@@ -53,6 +53,21 @@ const Home = () => {
         
         setOutput(response?.data?.message)
     })
+    const Listen= ()=>{
+        if(output==''){
+            alert("No output found");
+            return;
+        }
+        if('speechSynthesis' in window){
+            console.log("Speaking");
+            const utterance = new SpeechSynthesisUtterance(output);
+        window.speechSynthesis.speak(utterance);
+        }
+        else{
+            alert("No speechSynthesis found");
+        }
+        
+    }
     return (
         <div className='w-screen h-screen overflow-hidden border-box m-0'>
             <HeadBar/>
@@ -63,7 +78,8 @@ const Home = () => {
                 <div id='languageBox' className='flex flex-col justify-center items-center gap-4'>
                     <div className="flex w-full h-auto py-4 justify-center items-center">
                         <select onChange={(event)=>{
-                            console.log(event.target.value);
+                            setInLanguage(event.target.value)
+                            // console.log(event.target.value);
                         }}>
                             <option value='en'>
                                 English
@@ -87,7 +103,8 @@ const Home = () => {
                     </div>
                     <div className="flex w-full h-auto py-4 justify-center items-center">
                         <select onChange={(event)=>{
-                            console.log(event.target.value);
+                            setOutLanguage(event.target.value)
+                            // console.log(event.target.value);
                         }}>
                             <option value='en'>
                                 English
@@ -128,6 +145,7 @@ const Home = () => {
                 <div>
                     <button onClick={startListening}>StartListening</button>
                     <button onClick={stop}>StopListening</button>
+                    <button onClick={Listen}> Listen</button>
                 </div>
             </main>
             <Footer/>
