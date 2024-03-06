@@ -2,8 +2,8 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-// import Home from './pages/home'
-import Home from './pages/SecondHome'
+import Home from './pages/home'
+// import Home from './pages/SecondHome'
 
 function App() {
   const [count, setCount] = useState(0)
