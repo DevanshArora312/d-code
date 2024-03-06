@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import HeadBar from '../components/HeadBar'
 import Footer from '../components/Footer'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import axios from 'axios';
 const Home = () => {
     const [input, setInput] = useState('');
@@ -11,6 +12,22 @@ const Home = () => {
 
     const [pdf, setPdf] = useState('');
     
+    const startListening = () => {
+        SpeechRecognition.startListening({ continuous: true, language: 'en-IN' })
+    };
+
+    const { transcript, browserSupportsSpeechRecognition } = useSpeechRecognition();
+
+    useEffect(()=>{
+        setInput(transcript);
+    }, [transcript]);
+
+    const stop = () => {
+        console.log(transcript);
+        
+        SpeechRecognition.stopListening()
+        // setData(transcript);
+    };
 
     const changeHandler = ((event)=>{
         setInput(event.target.value);
@@ -94,7 +111,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div id='textArea' className='w-full h-auto border-box flex max-sm:flex-col gap-4 items-center justify-around'>
-                    <textarea className='w-[40%] bg-sky-300/70 h-[200px] border-2 p-2 rounded-md border-sky-500 outline-none' onChange={changeHandler}>
+                    <textarea className='w-[40%] bg-sky-300/70 h-[200px] border-2 p-2 rounded-md border-sky-500 outline-none' value={input} onChange={changeHandler}>
 
                     </textarea>
                     <textarea value={output} className='w-[40%] bg-sky-300/70 h-[200px] border-2 p-2 rounded-md border-sky-500 outline-none' readOnly>
@@ -107,6 +124,10 @@ const Home = () => {
                         <input type='file' id='pdfDocument' className='hidden' />
                     </div>
                     <button className='w-[41%] bg-sky-300 rounded-md border-sky-500 border-2 px-10 py-2 duration-200 hover:scale-95' onClick={submitHandler}>Translate</button>
+                </div>
+                <div>
+                    <button onClick={startListening}>StartListening</button>
+                    <button onClick={stop}>StopListening</button>
                 </div>
             </main>
             <Footer/>
