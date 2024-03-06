@@ -71,6 +71,21 @@ const Home = () => {
 
         setOutput(response?.data?.message)
     })
+    const Listen= ()=>{
+        if(output==''){
+            alert("No output found");
+            return;
+        }
+        if('speechSynthesis' in window){
+            console.log("Speaking");
+            const utterance = new SpeechSynthesisUtterance(output);
+        window.speechSynthesis.speak(utterance);
+        }
+        else{
+            alert("No speechSynthesis found");
+        }
+        
+    }
     return (
         <div className='w-screen h-screen overflow-hidden border-box m-0'>
             <HeadBar/>
@@ -154,6 +169,7 @@ const Home = () => {
                 <div>
                     <button onClick={startListening}>StartListening</button>
                     <button onClick={stop}>StopListening</button>
+                    <button onClick={Listen}> Listen</button>
                 </div>
             </main>
             <Footer/>
