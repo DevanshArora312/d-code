@@ -5,7 +5,7 @@ const fileUpload = require('express-fileupload');
 const pdfParse = require('pdf-parse');
 const axios = require('axios');
 
-const port = process.env.PORT || 4000;
+const port = 8080;
 
 const app = express();
 
