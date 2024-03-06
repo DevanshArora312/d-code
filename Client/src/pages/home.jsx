@@ -1,55 +1,99 @@
-import React from 'react'
+import React, {useState} from 'react'
 import HeadBar from '../components/HeadBar'
 import Footer from '../components/Footer'
 
 const Home = () => {
-  return (
-    <div className='w-screen h-screen overflow-hidden border-box m-0'>
-        <HeadBar/>
-        <main >
-            <div className='w-full flex flex-col justify-center items-center py-10'>
-                Real-Time language translation website
-            </div>
-            <div id='languageBox' className='flex flex-col justify-center items-center gap-4'>
-                <div className="flex w-full h-auto py-4 justify-center items-center">
-                    <select>
-                        <option>
-                            English
-                        </option>
-                        <option>
-                            Hindi
-                        </option>
-                    </select>
-                </div>
-                <div className="flex w-full h-auto py-4 justify-center items-center">
-                    <select>
-                        <option>
-                            English
-                        </option>
-                        <option>
-                            Hindi
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div id='textArea' className='w-full h-auto border-box flex max-sm:flex-col gap-4 items-center justify-around'>
-                <textarea className='w-[40%] bg-orange-100 h-[200px] border-2 border-orange-200'>
+    const [input, setInput] = useState('');
 
-                </textarea>
-                <textarea className='w-[40%] bg-orange-100 h-[200px] border-2 border-orange-200'>
-                    
-                </textarea>
-            </div>
-            <div id='submitArea' className='w-full h-auto border-box flex max-sm:flex-col gap-4 items-center justify-around px-5 py-10'>
-                <button className='w-[41%] bg-orange-300 border-yellow-200 px-10 py-2'>Translate</button>
-                <div className='w-[43%]'>
-                    Hello bhai
+    const [inLanguage, setInLanguage] = useState('en')
+    const [outLanguage, setOutLanguage] = useState('en')
+
+    const [pdf, setPdf] = useState('');
+    
+    const changeHandler = ((event)=>{
+        setInput(event.target.value);
+    })
+  
+    const submitHandler = (()=>{
+        // api call
+
+    })
+    return (
+        <div className='w-screen h-screen overflow-hidden border-box m-0'>
+            <HeadBar/>
+            <main >
+                <div className='w-full flex flex-col justify-center items-center py-10'>
+                    Real-Time language translation website
                 </div>
-            </div>
-        </main>
-        <Footer/>
-    </div>
-  )
+                <div id='languageBox' className='flex flex-col justify-center items-center gap-4'>
+                    <div className="flex w-full h-auto py-4 justify-center items-center">
+                        <select onChange={(event)=>{
+                            console.log(event.target.value);
+                        }}>
+                            <option value='en'>
+                                English
+                            </option>
+                            <option value='hi'>
+                                Hindi
+                            </option>
+                            <option value='bn'>
+                                Bengali
+                            </option>
+                            <option value='kn'>
+                                Kannada
+                            </option>
+                            <option value='as'>
+                                Assamese
+                            </option>
+                            <option value='ta'>
+                                Tamil
+                            </option>
+                        </select>
+                    </div>
+                    <div className="flex w-full h-auto py-4 justify-center items-center">
+                        <select onChange={(event)=>{
+                            console.log(event.target.value);
+                        }}>
+                            <option value='en'>
+                                English
+                            </option>
+                            <option value='hi'>
+                                Hindi
+                            </option>
+                            <option value='bn'>
+                                Bengali
+                            </option>
+                            <option value='kn'>
+                                Kannada
+                            </option>
+                            <option value='as'>
+                                Assamese
+                            </option>
+                            <option value='ta'>
+                                Tamil
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div id='textArea' className='w-full h-auto border-box flex max-sm:flex-col gap-4 items-center justify-around'>
+                    <textarea className='w-[40%] bg-sky-300/70 h-[200px] border-2 p-2 rounded-md border-sky-500 outline-none' onChange={changeHandler}>
+
+                    </textarea>
+                    <textarea className='w-[40%] bg-sky-300/70 h-[200px] border-2 p-2 rounded-md border-sky-500 outline-none' readOnly>
+
+                    </textarea>
+                </div>
+                <div id='submitArea' className='w-full h-auto border-box flex flex-col max-sm:flex-col gap-4 items-center justify-around px-5 py-10'>
+                    <div className='w-[41%] bg-sky-300 border-2 border-sky-500 rounded-md px-10 py-2 flex items-center justify-center cursor-pointer duration-200 hover:scale-95'>
+                        <label htmlFor='pdfDocument'>Upload a File</label>
+                        <input type='file' id='pdfDocument' className='hidden' />
+                    </div>
+                    <button className='w-[41%] bg-sky-300 rounded-md border-sky-500 border-2 px-10 py-2 duration-200 hover:scale-95'>Translate</button>
+                </div>
+            </main>
+            <Footer/>
+        </div>
+    )
 }
 
 export default Home
