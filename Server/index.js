@@ -12,6 +12,7 @@ const app = express();
 app.use(
     cors({
         origin: '*',
+        method:["PUT", "GET", "POST", "PATCH", "DELETE"],
         credentials: true
     })
 )
@@ -28,7 +29,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/pdf-parse', async(req, res)=>{
-    if((!req.files) || (!req.files.pdfDocument)){
+    if(!(req.files && req.files.pdfDocument)){
         return res.status(400).json({
             success: false,
             message: 'no pdf found in request'
@@ -41,7 +42,7 @@ app.post('/pdf-parse', async(req, res)=>{
     .then((result)=>{
         return res.status(200).json({
             success: true,
-            messsage: result.text
+            message: result.text
         })
     })
 })
@@ -79,7 +80,8 @@ app.post('/translate', async(req, res)=>{
         headers: null,
         params: null
     })
-    console.log(response);
+
+    console.log(response.data);
     return res.status(200).json({
         success: true, 
         message: response.data.output[0].target
