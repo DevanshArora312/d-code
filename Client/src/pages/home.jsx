@@ -14,7 +14,8 @@ const Home = () => {
 
     const [pdf, setPdf] = useState('');
     
-    
+    const [generatelink, setGenerateLink] = useState(false);
+    const [link, setLink] = useState('');
 
     const startListening = () => {
         SpeechRecognition.startListening({ continuous: true, language: 'en-IN' })
@@ -55,6 +56,7 @@ const Home = () => {
             });
             setInput(response?.data?.message)
             setPdf('');
+            setGenerateLink(true);
         }
         else{
             const response = await axiosInstance({
@@ -72,6 +74,19 @@ const Home = () => {
             })
     
             setOutput(response?.data?.message)
+
+            if(generatelink){
+                const response = await axiosInstance({
+                    method:  'POST',
+                    url: 'http://localhost:8080/pdfconvert',
+                    text: input,
+                    headers: null,
+                    params: null
+                })
+                console.log(response);
+                setLink(response?.data?.file)
+                setGenerateLink(false);
+            }
         }
     })
     const Listen= ()=>{
@@ -93,10 +108,10 @@ const Home = () => {
         <div className='custom-background w-screen text-white h-screen overflow-hidden border-box m-0'>
             <HeadBar/>
             <main >
-                <div className='w-full text-4xl flex flex-col justify-center items-center py-10'>
+                <div className='w-full text-4xl flex flex-col justify-center items-center py-2'>
                     Real-Time language translation website
                 </div>
-                <div id='languageBox' className='flex flex-col justify-center items-center gap-4'>
+                <div id='languageBox' className='flex flex-col justify-center items-center'>
                     <div className="flex w-full h-auto py-4 justify-center items-center">
                         <select className={'bg-white/20 border-2 border-white/50 rounded-sm'} onChange={(event)=>{
                             setInLanguage(event.target.value);
@@ -170,6 +185,9 @@ const Home = () => {
                         }}/>
                     </div>
                     <button className='w-[41%] bg-white/20 rounded-sm border-white/50 border-2 px-10 py-2 duration-200 hover:scale-95' onClick={submitHandler}>Translate</button>
+                    <div className='text-blue-700'>
+                        <a>{link}</a>
+                    </div>
                 </div>
                 <div className='w-full flex items-center gap-8 px-8 justify-center'>
                     <button onClick={startListening} className='w-[41%] bg-white/20 rounded-sm border-white/50 border-2 px-10 py-2 duration-200 hover:scale-95'>StartListening</button>

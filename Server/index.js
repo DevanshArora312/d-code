@@ -116,11 +116,11 @@ app.post("/pdfconvert",(req, res)=>{
     .catch((err)=>{
         console.error(err);
     })
-    const filepath = 'http://localhost:3000/docs/' + filename;
+    const filepath = 'http://localhost:8080/docs/' + filename;
     console.log(filepath);
     return res.status(200).json({
         success: true,
-        message: filepath
+        file: filepath
     })
 })
 
