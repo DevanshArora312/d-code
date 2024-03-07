@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import HeadBar from '../components/HeadBar'
 import Footer from '../components/Footer'
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+// import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import axios from 'axios';
 const Home = () => {
     const [input, setInput] = useState('');
@@ -17,22 +17,22 @@ const Home = () => {
     const [generatelink, setGenerateLink] = useState(false);
     const [link, setLink] = useState('');
 
-    const startListening = () => {
-        SpeechRecognition.startListening({ continuous: true, language: 'en-IN' })
-    };
+    // const startListening = () => {
+    //     SpeechRecognition.startListening({ continuous: true, language: 'en-IN' })
+    // };
 
-    const { transcript, browserSupportsSpeechRecognition } = useSpeechRecognition();
+    // const { transcript, browserSupportsSpeechRecognition } = useSpeechRecognition();
 
-    useEffect(()=>{
-        setInput(transcript);
-    }, [transcript]);
+    // useEffect(()=>{
+    //     setInput(transcript);
+    // }, [transcript]);
 
-    const stop = () => {
-        console.log(transcript);
+    // const stop = () => {
+    //     console.log(transcript);
         
-        SpeechRecognition.stopListening()
-        // setData(transcript);
-    };
+    //     SpeechRecognition.stopListening()
+    //     // setData(transcript);
+    // };
     
     const changeHandler = ((event)=>{
         setInput(event.target.value);
@@ -190,9 +190,9 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='w-full flex items-center gap-8 px-8 justify-center'>
-                    <button onClick={startListening} className='w-[41%] bg-white/20 rounded-sm border-white/50 border-2 px-10 py-2 duration-200 hover:scale-95'>StartListening</button>
-                    <button onClick={stop} className='w-[41%] bg-white/20 rounded-sm border-white/50 border-2 px-10 py-2 duration-200 hover:scale-95'>StopListening</button>
-                    <button onClick={Listen} className='w-[41%] bg-white/20 rounded-sm border-white/50 border-2 px-10 py-2 duration-200 hover:scale-95'> Listen</button>
+                    {/* <button onClick={startListening} className='w-[41%] bg-white/20 rounded-sm border-white/50 border-2 px-10 py-2 duration-200 hover:scale-95'>StartListening</button> */}
+                    {/* <button onClick={stop} className='w-[41%] bg-white/20 rounded-sm border-white/50 border-2 px-10 py-2 duration-200 hover:scale-95'>StopListening</button> */}
+                    {/* <button onClick={Listen} className='w-[41%] bg-white/20 rounded-sm border-white/50 border-2 px-10 py-2 duration-200 hover:scale-95'> Listen</button> */}
                 </div>
             </main>
         </div>
