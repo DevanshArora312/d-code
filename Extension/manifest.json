@@ -1,0 +1,29 @@
+{   
+    "manifest_version":3,
+
+    "name":"Translate Plugin",
+    "description": "This extension will show you the latest news with headlines and small description",
+    "version":"1.0",
+
+
+    "action":{
+        "default_popup":"index.html"
+    },
+
+    "content_scripts":[
+        {
+            "matches":["http://*/*","https://*/*"],
+            "js":["content_script.js"],
+            "run_at" : "document_idle"
+        }
+    ],
+    "background": {
+    
+        "service_worker": "background.js"
+    
+    },
+    "permissions":[
+        "activeTab",
+        "scripting"
+    ]
+}

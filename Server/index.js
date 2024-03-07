@@ -59,7 +59,8 @@ app.post('/pdf-parse', async(req, res)=>{
 
 
 app.post('/translate', async(req, res)=>{
-    const {languageFrom, languageTo, text} = req.body;
+    try{
+        const {languageFrom, languageTo, text} = req.body;
     console.log(languageFrom, languageTo, text);
     if(!languageFrom || !languageTo || !text){
         return res.status(400).json({
@@ -95,6 +96,9 @@ app.post('/translate', async(req, res)=>{
         success: true, 
         message: response.data.output[0].target
     })
+    } catch(err){
+        console.log(err.message)
+    }
 })
 
 
