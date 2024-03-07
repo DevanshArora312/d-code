@@ -4,10 +4,20 @@ const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const pdfParse = require('pdf-parse');
 const axios = require('axios');
-
+const fs= require("fs");
+const pdf = require("pdf-creator-node");
 const port = 8080;
+const path = require('path');
+
+const options = {
+    formate: 'A3',
+    orientation: 'portrait',
+    border: '2mm',
+
+}
 
 const app = express();
+var tempData=""
 
 app.use(
     cors({
@@ -80,11 +90,37 @@ app.post('/translate', async(req, res)=>{
         headers: null,
         params: null
     })
-
-    console.log(response.data);
+    tempData= response.data.output[0].target;
     return res.status(200).json({
         success: true, 
         message: response.data.output[0].target
+    })
+})
+
+
+app.post("/pdfconvert",(req, res)=>{
+    const {text} = req.body;
+    const html = fs.readFileSync(path.join(__dirname, '/views/template.html'), 'utf-8');
+    const filename = Math.random() + '_doc' + '.pdf'
+    const document = {
+        html: html,
+        data: {
+            text
+        },
+        path: './docs/' + filename
+    }
+    pdf.create(document, options)
+    .then((res)=>{
+        console.log(res);
+    })
+    .catch((err)=>{
+        console.error(err);
+    })
+    const filepath = 'http://localhost:8080/docs/' + filename;
+    console.log(filepath);
+    return res.status(200).json({
+        success: true,
+        file: filepath
     })
 })
 
