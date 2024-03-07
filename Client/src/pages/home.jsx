@@ -72,14 +72,14 @@ const Home = () => {
                 headers: null,
                 params: null
             })
-    
-            setOutput(response?.data?.message)
+            const output = response?.data?.message
+            setOutput(output)
 
             if(generatelink){
                 const response = await axiosInstance({
                     method:  'POST',
                     url: 'http://localhost:8080/pdfconvert',
-                    text: input,
+                    text: output,
                     headers: null,
                     params: null
                 })
