@@ -47,7 +47,7 @@ const Home = () => {
             formData.append("pdfDocument", pdf);
             const response = await axiosInstance({
                 method:  'POST',
-                url: 'http://localhost:8080/pdf-parse',
+                url: 'https://d-code-25fd.onrender.com/pdf-parse',
                 data: formData,
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -61,7 +61,7 @@ const Home = () => {
         else{
             const response = await axiosInstance({
                 method:  'POST',
-                url: 'http://localhost:8080/translate',
+                url: 'https://d-code-25fd.onrender.com/translate',
                 data: {
                     languageFrom: inLanguage,
                     languageTo : outLanguage,
@@ -78,7 +78,7 @@ const Home = () => {
             if(generatelink){
                 const response = await axiosInstance({
                     method:  'POST',
-                    url: 'http://localhost:8080/pdfconvert',
+                    url: 'https://d-code-25fd.onrender.com/pdfconvert',
                     text: output,
                     headers: null,
                     params: null
